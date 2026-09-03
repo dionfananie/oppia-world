@@ -1,0 +1,12 @@
+.brand .brand-mark {
+  overflow: hidden;
+  background: #fff;
+  color: transparent;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contains;
+}
