@@ -1,0 +1,27 @@
+{
+  "name": "Oppia",
+  "short_name": "Oppia",
+  "description": "Thoughtful digital products for reading, learning, speaking, building, and creating.",
+  "start_url": "https://oppia.world",
+  "display": "browser",
+  "background_color": "#f4f0e7",
+  "theme_color": "#171912",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
