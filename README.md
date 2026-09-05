@@ -1,109 +1,62 @@
-# Welcome to React Router + Cloudflare Workers!
+# Oppia World
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
+Halaman pembuka (landing page) dan **peta link** ekosistem Oppia. Live di **https://oppia.world**.
 
-![React Router Starter Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/bfdc2f85-e5c9-4c92-128b-3a6711249800/public)
+Bukan aplikasi fungsional, melainkan sebuah hub brand yang menyajikan identitas, filosofi, dan kartu tautan ke tiap produk di bawah domain oppia.world, dirancang sebagai satu konstelasi produk ("The Oppia constellation").
 
-<!-- dash-content-start -->
+## Produk yang di-tautkan (6)
 
-A modern, production-ready template for building full-stack React applications using [React Router](https://reactrouter.com/) and the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/).
+| Produk           | Domain                   | Fokus                                      |
+| ---------------- | ------------------------ | ------------------------------------------ |
+| Moozhaf          | moozhaf.oppia.world      | Qur'an, surah & ayat, untuk kembali tiap hari |
+| PICA             | pica.oppia.world         | Game belajar untuk anak 2-7 tahun          |
+| Tolk             | tolk.oppia.world         | Latihan percakapan Business English (AI roleplay) |
+| Toolhub          | toolhub.oppia.world      | Utilitas developer (PDF, teks, data)       |
+| Writer           | write.oppia.world        | Generate ide & transform dokumen            |
+| insideLab        | insidelab.oppia.world    | Lab belajar interaktif JavaScript & logika  |
 
-## Features
+## Struktur Halaman
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-- 🔎 Built-in Observability to monitor your Worker
-<!-- dash-content-end -->
+Homepage (satu route) menyajikan beberapa bagian:
 
-## Getting Started
+- **Header** - nav sticky
+- **Hero** - pesan utama + **orbit konstelasi** (6 planet produk dapat diklik)
+- **Signal strip** - janji produk
+- **Products section** - selector tab produk, deskripsi & CTA + **preview visual hidup** tiap produk (mis. preview editor untuk insideLab)
+- **Principles** - cara Oppia merancang ("Calm, not cold / Guidance, not noise / Delight with purpose")
+- **Journeys** - daftar titik masuk per produk
+- **Final CTA** dan **Footer**
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+## Struktur Folder & Teknologi
 
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/react-router-starter-template
+```
+app/
+  routes/home.tsx        Halaman utama (data produk + section + SEO/JSON-LD)
+  app.css, brand.css     Gaya & desain sistem konstolasi
+public/                  Logo & aset statis
+workers/app.ts           Cloudflare Worker entry (adds nosniff headers)
 ```
 
-A live public deployment of this template is available at [https://react-router-starter-template.templates.workers.dev](https://react-router-starter-template.templates.workers.dev)
+- React Router 7 + React 19 (SSR) + TypeScript
+- Tailwind CSS v4 + [lucide-react](https://lucide.dev) icons
+- Cloudflare Workers (SSR)
 
-### Installation
+Produk didefinisikan dalam satu array `products` di `app/routes/home.tsx` (nama, warna accent, ikon lucide, copy, href). Menambah produk baru cukup menambah entri di array itu + preview visual + posisi orbit di CSS.
 
-Install the dependencies:
+## Scripts
 
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Typegen
-
-Generate types for your Cloudflare bindings in `wrangler.json`:
-
-```sh
-npm run typegen
-```
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Previewing the Production Build
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
+| Perintah            | Deskripsi                          |
+| ------------------- | ---------------------------------- |
+| `npm run dev`       | Jalankan dev server dengan HMR     |
+| `npm run build`     | Build produksi                     |
+| `npm run typecheck` | Typegen + `tsc -b`                 |
+| `npm run check`     | Typecheck + build + wrangler dry-run |
+| `npm run deploy`    | Deploy ke Cloudflare Workers       |
 
 ## Deployment
 
-If you don't have a Cloudflare account, [create one here](https://dash.cloudflare.com/sign-up)! Go to your [Workers dashboard](https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fworkers-and-pages) to see your [free custom Cloudflare Workers subdomain](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/) on `*.workers.dev`.
-
-Once that's done, you can build your app:
-
-```sh
-npm run build
-```
-
-And deploy it:
-
-```sh
-npm run deploy
-```
-
-To deploy a preview URL:
-
-```sh
-npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
-npx wrangler versions deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Deploy ke https://oppia.world via Cloudflare Worker. Halaman root yang menautkan ke semua produk Oppia World.
 
 ---
 
-Built with ❤️ using React Router.
+© Oppia World. All Rights Reserved.
