@@ -1,4 +1,5 @@
 import { createRequestHandler } from "react-router";
+import { handleAssetsApi } from "./api/assets";
 
 declare module "react-router" {
 	export interface AppLoadContext {
@@ -16,6 +17,10 @@ const requestHandler = createRequestHandler(
 
 export default {
 	fetch(request, env, ctx) {
+		const url = new URL(request.url);
+		if (url.pathname.startsWith("/api/assets")) {
+			return handleAssetsApi(request, env);
+		}
 		return requestHandler(request, {
 			cloudflare: { env, ctx },
 		});
