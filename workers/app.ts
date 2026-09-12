@@ -1,6 +1,7 @@
 import { createRequestHandler } from "react-router";
 import { handleAssetsApi } from "./api/assets";
 
+import * as serverBuild from "virtual/react-router/server-build";
 declare module "react-router" {
 	export interface AppLoadContext {
 		cloudflare: {
@@ -10,10 +11,7 @@ declare module "react-router" {
 	}
 }
 
-const requestHandler = createRequestHandler(
-	() => import("virtual:react-router/server-build"),
-	import.meta.env.MODE,
-);
+const requestHandler = createRequestHandler(serverBuild, import.meta.env.MODE);
 
 export default {
 	fetch(request, env, ctx) {

@@ -1,15 +1,18 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "oppia-world",
-	"main": "./workers/app.ts",
+	"main": "./build/server/static/js/app.js",
 	"compatibility_date": "2025-10-08",
 	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
 		"enabled": true
 	},
 	"upload_source_maps": true,
+	"assets": {
+		"directory": "./build/client/"
+	},
 	"vars": {
 		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
-		"ASSET_ORIGIN": "https://assets.oppia.world/images"
+		"ASSET_ORIGIN": "https://assets.oppia.world"
 	}
 }
