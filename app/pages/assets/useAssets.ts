@@ -10,6 +10,7 @@ export type AssetsInteractions = {
 	assets: Asset[];
 	total: number;
 	loading: boolean;
+	loadingMore: boolean;
 	error: string | null;
 	categories: string[];
 	type: string;
@@ -30,16 +31,19 @@ export function useAssets(): AssetsInteractions {
 	const [total, setTotal] = useState(0);
 	const [limit, setLimit] = useState(DEFAULT_LIMIT);
 	const [loading, setLoading] = useState(true);
+	const [loadingMore, setLoadingMore] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const controller = new AbortController();
+		const isLoadMore = limit > DEFAULT_LIMIT;
 		const params = new URLSearchParams();
 		if (type) params.set('type', type);
 		if (query) params.set('search', query);
 		params.set('limit', String(limit));
 
-		setLoading(true);
+		if (isLoadMore) setLoadingMore(true);
+		else setLoading(true);
 		setError(null);
 
 		fetch(`/api/assets?${params.toString()}`, { signal: controller.signal })
@@ -56,7 +60,10 @@ export function useAssets(): AssetsInteractions {
 				setError(err instanceof Error ? err.message : 'Unexpected error');
 			})
 			.finally(() => {
-				if (!controller.signal.aborted) setLoading(false);
+				if (!controller.signal.aborted) {
+					setLoading(false);
+					setLoadingMore(false);
+				}
 			});
 
 		return () => controller.abort();
@@ -100,6 +107,7 @@ export function useAssets(): AssetsInteractions {
 		assets,
 		total,
 		loading,
+		loadingMore,
 		error,
 		categories,
 		type,

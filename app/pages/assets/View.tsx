@@ -2,6 +2,7 @@ import { useAssets } from './useAssets';
 import { SearchBar } from './components/SearchBar';
 import { TypeFilter } from './components/TypeFilter';
 import { AssetGrid } from './components/AssetGrid';
+import { LoadMore } from './components/LoadMore';
 
 /** Halaman galeri aset — komposisi UI; state di useAssets. */
 export default function AssetsView() {
@@ -9,6 +10,7 @@ export default function AssetsView() {
 		assets,
 		total,
 		loading,
+		loadingMore,
 		error,
 		categories,
 		type,
@@ -47,21 +49,13 @@ export default function AssetsView() {
 			) : (
 				<>
 					<AssetGrid assets={assets} />
-					<div className="mt-10 flex items-center justify-center gap-6">
-						<p className="m-0 text-sm text-neutral-500">
-							Showing {assets.length} of {total}
-						</p>
-						{hasMore && (
-							<button
-								type="button"
-								onClick={loadMore}
-								disabled={loading}
-								className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm font-semibold transition hover:border-black/40 disabled:opacity-50"
-							>
-								{loading ? 'Loading…' : 'Load more'}
-							</button>
-						)}
-					</div>
+					<LoadMore
+						loading={loadingMore}
+						shown={assets.length}
+						total={total}
+						hasMore={hasMore}
+						onLoadMore={loadMore}
+					/>
 				</>
 			)}
 		</main>
